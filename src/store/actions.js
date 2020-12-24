@@ -14,6 +14,11 @@ export const setSingleData = (data) => ({
     payload: data,
 });
 
+export const error = (error) => ({
+    type: C.SET_ERROR,
+    payload: error,
+});
+
 export const fetchData = (
     endpoint,
     id = "",
@@ -40,7 +45,7 @@ export const fetchData = (
         })
         .catch((error) => {
             console.log(error);
-            dispatch(error("not fetching"))
+
         })
 }
 export const updateData = (endpoint, method, id, body, p) => (dispatch) => {
