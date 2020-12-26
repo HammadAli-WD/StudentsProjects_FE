@@ -19,7 +19,7 @@ function CustomModal(props) {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="example-modal-sizes-title-lg">
-                        Large Modal
+                        Data Entry Form
           </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
