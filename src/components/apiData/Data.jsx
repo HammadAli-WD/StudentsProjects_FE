@@ -1,8 +1,8 @@
 import { Form } from "react-bootstrap";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { isLoading, fetchData } from "../../store/actions";
-
+import { stopLoading, fetchData } from "../../store/actions";
+import { withRouter } from "react-router-dom";
 class Data extends Component {
     constructor(props) {
         super(props)
@@ -15,11 +15,13 @@ class Data extends Component {
     componentDidMount = async () => {
         const { param } = this.props;
         this.props.fetchData(this.props.endpoint, param ? param : "", "GET");
+
     };
 
     componentDidUpdate = (prevProps) => {
         if (
             prevProps.endpoint !== this.props.endpoint ||
+            prevProps.method !== this.props.method ||
             prevProps.query !== this.props.query ||
             prevProps.page !== this.props.page ||
             prevProps.queryKey !== this.props.queryKey ||
@@ -31,11 +33,11 @@ class Data extends Component {
     }
 
     handleDelete = async (id) => {
-        const { endpoint, param } = this.props;
+        const { endpoint, param, fetchData, stopLoading } = this.props;
         this.props.fetchData(this.props.endpoint, id, "DELETE");
         if (!this.props.error) {
-            this.props.isLoading();
-            this.props.fetchData(endpoint);
+            stopLoading();
+            fetchData(endpoint, param ? param : "", "GET");
         }
     };
 
@@ -47,14 +49,14 @@ class Data extends Component {
 
 }
 
-export default connect(
+export default withRouter(connect(
     (state) => ({ ...state }),
     (dispatch) => ({
         fetchData: (endpoint, id, method, body, params) => {
             dispatch(fetchData(endpoint, id, method, body, params));
         },
-        isLoading: () => {
-            dispatch(isLoading());
+        stopLoading: () => {
+            dispatch(stopLoading());
         },
     })
-)(Data);
+)(Data));
