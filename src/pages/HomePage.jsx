@@ -115,11 +115,11 @@ function HomePage(props) {
                             triggerBtn={<Button variant="primary">Update</Button>}
                           >
                             <UpdateData
-                              setSingleData={student}
+                              singleData={student}
                               //fetchData={fetchData}
                               method={"PUT"}
-                              endpoint={`http://localhost:3000/student/${student._id}`}
-                            //param={student._id}
+                              endpoint={"http://localhost:3000/student/"}
+                              param={student._id}
                             >
                               <DataForm />
                             </UpdateData>
