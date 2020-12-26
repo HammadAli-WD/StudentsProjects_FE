@@ -7,7 +7,7 @@ class UpdateData extends Component {
         super(props);
 
         this.state = {
-            setSingleData: this.props.setSingleData || {},
+            singleData: this.props.singleData || {},
         };
     }
 
@@ -16,12 +16,12 @@ class UpdateData extends Component {
 
         const { endpoint, method, fetchData, closeModal, param, stopLoading } = this.props;
         console.log("response", this.state.data);
-        delete this.state.setSingleData._id;
+        delete this.state.singleData._id;
         this.props.fetchData(
             endpoint,
             param ? param : "",
             method,
-            this.state.setSingleData
+            this.state.singleData
         );
         if (!this.props.error) {
             closeModal();
@@ -54,12 +54,12 @@ class UpdateData extends Component {
     };
 
     render() {
-        const { setSingleData } = this.state;
+        const { singleData } = this.state;
         // For clonning each elements with new props
         return React.cloneElement(this.props.children, {
             state: this.state,
             setData: (state) =>
-                this.setState({ setSingleData: { ...setSingleData, ...state } }),
+                this.setState({ singleData: { ...singleData, ...state } }),
             onSubmit: (e) => this.onSubmit(e),
 
             ...this.state,
