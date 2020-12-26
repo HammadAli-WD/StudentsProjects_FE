@@ -1,31 +1,33 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchData, isLoading } from "../../store/actions";
+import { fetchData, stopLoading } from "../../store/actions";
+import { withRouter } from "react-router-dom";
 class UpdateData extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            singleData: this.props.singleData || {},
+            setSingleData: this.props.setSingleData || {},
         };
     }
 
     onSubmit = async (event) => {
         event.preventDefault();
 
-        const { endpoint, method, fetchData, closeModal, param } = this.props;
+        const { endpoint, method, fetchData, closeModal, param, stopLoading } = this.props;
         console.log("response", this.state.data);
-        delete this.state.singleData._id;
+        delete this.state.setSingleData._id;
         this.props.fetchData(
             endpoint,
             param ? param : "",
             method,
-            this.state.singleData
+            this.state.setSingleData
         );
         if (!this.props.error) {
             closeModal();
-            this.props.isLoading();
-            this.props.fetchData(endpoint);
+            stopLoading();
+            fetchData(endpoint, param ? param : "", "GET");
+            //this.props.history.push("/")
         }
 
         // let response = await fetch(param? endpoint+param : endp, {
@@ -52,11 +54,12 @@ class UpdateData extends Component {
     };
 
     render() {
-        const { singleData } = this.state;
+        const { setSingleData } = this.state;
+        // For clonning each elements with new props
         return React.cloneElement(this.props.children, {
             state: this.state,
             setData: (state) =>
-                this.setState({ singleData: { ...singleData, ...state } }),
+                this.setState({ setSingleData: { ...setSingleData, ...state } }),
             onSubmit: (e) => this.onSubmit(e),
 
             ...this.state,
@@ -64,14 +67,14 @@ class UpdateData extends Component {
     }
 }
 
-export default connect(
+export default withRouter(connect(
     (state) => ({ ...state }),
     (dispatch) => ({
         fetchData: (endpoint, id, method, body, params) => {
             dispatch(fetchData(endpoint, id, method, body, params));
         },
-        isLoading: () => {
-            dispatch(isLoading());
+        stopLoading: () => {
+            dispatch(stopLoading());
         },
     })
-)(UpdateData);
+)(UpdateData));
