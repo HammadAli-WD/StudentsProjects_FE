@@ -1,6 +1,6 @@
 import C from "./constants";
 
-export const isLoading = () => ({
+export const stopLoading = () => ({
     type: C.LOADING,
 });
 
@@ -31,7 +31,7 @@ export const fetchData = (
         method: method,
         body: ["PUT", "POST"].includes(method) ? JSON.stringify(body) : undefined,
         headers: {
-            "Content-type": "application/json"
+            "Content-Type": "application/json"
         }
     })
 
@@ -40,7 +40,7 @@ export const fetchData = (
             if (!["DELETE", "PUT", "POST"].includes(method)) {
                 id ? dispatch(setSingleData(data.data)) : dispatch(setData(data.data));
                 console.log("fetching");
-                dispatch(isLoading());
+                dispatch(stopLoading());
             }
         })
         .catch((error) => {
