@@ -33,12 +33,13 @@ function HomePage(props) {
             <>
               <div className={"d-flex justify-content-between"}>
                 <CustomModel
-                  trigger={<Button variant="primary">Add Student</Button>}
+                  triggerBtn={<Button variant="primary">Add Student</Button>}
                 >
                   <UpdateData
-                    // fetchData={fetchData}
+                    //fetchData={fetchData}
                     method={"POST"}
-                    endpoint={`http://localhost:3000/student`}
+                    endpoint={"http://localhost:3000/student"}
+
                   >
                     <DataForm />
                   </UpdateData>
@@ -92,7 +93,7 @@ function HomePage(props) {
                       <tr key={student._id}>
                         <td
                           onClick={() =>
-                            props.history.push(`/students/${student._id}`)
+                            props.history.push(`/student/${student._id}`)
                           }
                         >
                           {student._id}
@@ -103,7 +104,7 @@ function HomePage(props) {
                         <td>{student.dateOfBirth}</td>
                         <td>
                           <Button
-                            onClick={() => handleDelete(student._id)}
+                            onClick={() => handleDelete(`/${student._id}`)}
                             variant="danger"
                           >
                             Delete
@@ -111,14 +112,14 @@ function HomePage(props) {
                         </td>
                         <td>
                           <CustomModel
-                            trigger={<Button variant="primary">Update</Button>}
+                            triggerBtn={<Button variant="primary">Update</Button>}
                           >
                             <UpdateData
-                              singleData={student}
-                              // fetchData={fetchData}
+                              setSingleData={student}
+                              //fetchData={fetchData}
                               method={"PUT"}
-                              endpoint={`http://localhost:3000/student`}
-                              param={student._id}
+                              endpoint={`http://localhost:3000/student/${student._id}`}
+                            //param={student._id}
                             >
                               <DataForm />
                             </UpdateData>
