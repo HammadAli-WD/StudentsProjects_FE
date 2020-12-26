@@ -33,12 +33,12 @@ function StudentDataForm(props) {
                 />
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
-                <Form.Label>Image</Form.Label>
+                <Form.Label>Country</Form.Label>
                 <Form.Control
                     type="text"
-                    placeholder="Enter image"
-                    value={singleData.image}
-                    onChange={(e) => setData({ image: e.target.value })}
+                    placeholder="Enter country"
+                    value={singleData.country}
+                    onChange={(e) => setData({ country: e.target.value })}
                 />
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
